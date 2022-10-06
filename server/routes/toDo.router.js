@@ -6,22 +6,76 @@ const pool = require('../modules/pool.js');
 
 router.get('/', (req,res)=>{
     console.log('in toDoGET');
-    res.sendStatus(200);
+    const sqlText = `SELECT * FROM "toDo" ORDER BY "id";`;
+    pool.query(sqlText)
+        .then(dbRes=>{
+            res.send(dbRes.rows);
+        })
+        .catch(err=>{
+            console.log('error in toDoGET', error);
+            res.sendStatus(500);
+        });
 })
 
 router.post('/', (req, res)=>{
     console.log('in toDoPOST');
-    res.sendStatus(200);
+    const sqlText = `
+        INSERT INTO "toDo" 
+            ("taskName","task","taskDone")
+        VALUES
+            ($1,$2,$3);
+    `;
+    const sqlParams = [
+        req.body.taskName,
+        req.body.task,
+        req.body.taskDone
+    ]
+    pool.query(sqlText,sqlParams)
+        .then(dbRes=>{
+            res.sendStatus(201);
+        })
+        .catch(err=>{
+            console.log('error in toDoPOST', err);
+            res.sendStatus(500);
+        });
 });
 
 router.delete('/:id', (req,res)=>{
     console.log('in toDoDELETE');
-    res.sendStatus(200);
+    const taskId = req.params.id;
+    
+    const sqlText = `
+        DELETE FROM "toDo"
+        WHERE "id" = $1;
+    `;
+    const sqlParams = [taskId];
+    pool.query(sqlText, sqlParams)
+    .then(dbRes=>{
+        res.sendStatus(200);
+    })
+    .catch(err=>{
+        console.log('error in toDoDELETE', err);
+        res.sendStatus(500);
+    });
 });
 
 router.put('/:id',(req,res)=>{
     console.log('in toDoPUT');
-    res.sendStatus(201);
+    const taskId = req.params.id;
+    const sqlText = `
+        UPDATE "toDo"
+        SET "taskDone" = NOT "taskDone"
+        WHERE "id" = $1;
+    `;
+    const sqlParams = [taskId];
+    pool.query(sqlText, sqlParams)
+        .then(dbRes=>{
+            res.sendStatus(201);
+        })
+        .catch(err=>{
+            console.log('error in toDoPUT', err);
+            res.sendStatus(500);
+        });
 });
 
 module.exports = router;

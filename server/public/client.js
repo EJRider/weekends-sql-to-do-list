@@ -23,3 +23,7 @@ function dltTask(){
 function markTaskDone(){
     console.log('in markTaskDone');
 }
+
+function render(){
+    console.log('in render');
+}
