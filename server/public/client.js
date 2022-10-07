@@ -10,6 +10,11 @@ function onReady(){
     getTask();
 };
 
+/*
+This function takes in the task name and what the task is and ships it, as well as
+a false boolean that shows the task has not been finished, to the database.
+It then calls the cleanUp and getTask functions.
+*/
 function addTask(){
     console.log('in addTask');
     let newTask = {
@@ -31,7 +36,10 @@ function addTask(){
             console.log('error in addTask', err);
         });
 };
-
+/*
+This function asks for all the tasks from the database and send them to the 
+render function 
+*/
 function getTask(){
     console.log('in getTask');
     $.ajax({
@@ -47,6 +55,11 @@ function getTask(){
         });
 };
 
+/*
+This task waits for the delete button to be clicked, once it is clicked it 
+sends a delete request to the database and removes it from the database before
+calling the getTask function
+*/
 function dltTask(){
     console.log('in dltTask', $(this).data('id'));
     let taskId = $(this).data('id');
@@ -63,6 +76,11 @@ function dltTask(){
         })
 }
 
+/*
+This function waits for the Mark Tasks Done (MTD) button to be clicked.
+It then sends a PUT request to the database to change the boolean in the 
+"taskDone" row from false to true. Once that is done it calls the getTask function/
+*/
 function markTaskDone(){
     console.log('in markTaskDone', $(this).data('id'));
     let taskId = $(this).data('id');
@@ -79,11 +97,19 @@ function markTaskDone(){
         });
 };
 
+/* 
+This function empties the taskName and task inputs after a task has been
+submitted to the database.
+*/
 function cleanUp(){
     $('#taskNameIn').val('');
     $('#taskIn').val('');
 };
 
+/*
+This function  empties the viewTasks table and then appends in everything from
+the database
+*/
 function render(tasks){
     console.log('in render');
     $('#viewTasks').empty()
@@ -101,7 +127,6 @@ function render(tasks){
         else{
             $('#viewTasks').append(`
             <tr>
-                <td>${task.id}</td>
                 <td>${task.taskName}</td>
                 <td>${task.task}</td>
                 <td>❌</td>
