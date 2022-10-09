@@ -116,7 +116,7 @@ function render(tasks){
     for(let task of tasks){
         if(task.taskDone === true){
             $('#viewTasks').append(`
-                <tr>
+                <tr class="finishedTask">
                     <td>${task.taskName}</td>
                     <td>${task.task}</td>
                     <td>✅</td>

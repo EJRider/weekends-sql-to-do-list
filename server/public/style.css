@@ -1,0 +1,38 @@
+body {
+    font-family: sans-serif;
+    background-color: paleturquoise;
+}
+
+section {
+    border: 2px solid #641723;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: lavender;
+}
+
+table {
+    border-collapse: collapse;
+     width: 100%;   
+}
+
+h1 {
+    text-decoration: underline;
+    font-weight:bold;
+}
+
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    font-size: 24px;
+    font-weight:bold;
+}
+
+
+
+.finishedTask:not(:last-child) {
+    background-image: linear-gradient(to bottom right,red,orange,yellow,green,blue,indigo,violet );
+    color: white;
+    -webkit-text-stroke: 1px black;
+}
